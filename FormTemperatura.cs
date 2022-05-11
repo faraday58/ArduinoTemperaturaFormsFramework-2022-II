@@ -62,5 +62,45 @@ namespace ArduinoTemperaturaFormsFramework_2022_II
                 }
             }
         }
+
+        private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StreamReader sr = null;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter= "Archivos de Texto | *.txt|Todos los archivos (*.*)|*.*";
+            ofd.DefaultExt = ".txt";
+            if(ofd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    sr = new StreamReader(ofd.FileName);
+                    string linea= sr.ReadLine();
+                    
+                    while(linea != null)                    {
+                        linea = sr.ReadLine();
+                        if (linea != null)
+                        {
+                            string[] aux = linea.Split(',');
+                            dgvTemperatura.Rows.Add(aux[0], aux[1]);
+                        }
+                                                
+                    }
+
+                }
+                catch(Exception error)
+                {
+                    MessageBox.Show(error.Message);
+                }
+                finally
+                {
+                    sr.Close();
+                }
+            }
+
+
+
+
+
+        }
     }
 }
